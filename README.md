@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Spindrift: Surfing Data Visualization and Predictive Analytics
+
+![Banner.png](https://github.com/kanedeiley/Spindrift/blob/main/Banner.png)
+
+## Table of Contents
+
+- [About](#about)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Data Sources](#data-sources)
+- [Contributing](#contributing)
+
+## About
+
+Spindrift is a surf data visualization and predictive analytics application aimed at providing surfers with valuable insights into current surf conditions and future forecasts. Whether you're a seasoned surfer or a novice catching your first wave, Spindrift is here to help you make informed decisions about when and where to hit the waves.
+
+The primary goals of this project are:
+
+- **Visualize Surfing Data:** Present surf data in an easily understandable format, including wave height, swell direction, wind speed, and more.
+
+- **Predictive Analytics:** Utilize predictive modeling to offer surfers forecasts for future conditions, helping them plan their surfing sessions more effectively.
+
+## Features
+
+- Real-time Surf Data Visualization
+- Surf Forecast Predictions
+- Interactive Maps and Charts
+- User-Friendly Interface
+- Customizable Alerts and Notifications
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to get Spindrift up and running on your local machine:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the Repository:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/yourusername/spindrift.git
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. ...
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Usage
 
-## Learn More
+To interact with Spindrift, follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Open Spindrift:** Launch the Spindrift application on your local server.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **View Real-time Surf Data:** Upon opening, you'll see real-time surf data displayed on the main dashboard. This data includes wave height, swell direction, wind speed, and more.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Explore Surf Forecasts:** Navigate to the forecast section to access predictions for future surf conditions. Spindrift's predictive analytics will provide you with insights into upcoming waves, helping you plan your surfing sessions effectively.
 
-## Deploy on Vercel
+4. **Customize Alerts:** Set up customizable alerts and notifications to stay informed about changes in surf conditions at your favorite spots.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Interact with Maps and Charts:** Dive deeper into surf data by interacting with interactive maps and charts. Analyze trends and patterns to make data-driven decisions about your surfing adventures.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Data Sources
+
+Spindrift relies on the following data sources to provide accurate surf information:
+
+- [Surfline API](https://developer.surfline.com/docs/overview): Real-time surf data and forecasts.
+- [NOAA Buoy Data](https://www.ndbc.noaa.gov/): Wave and weather data from buoys.
+- [Weather APIs](https://open-meteo.com/): Weather forecasts and conditions.
+- [Tide Data](https://tidesandcurrents.noaa.gov/): Tide predictions for surf spots.
+
+## Contributing
+
+We welcome contributions from the open-source community. If you'd like to contribute to Spindrift, please follow our [Contribution Guidelines](CONTRIBUTING.md).
+
+
+
