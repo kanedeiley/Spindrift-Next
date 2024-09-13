@@ -171,3 +171,9 @@ export const createJournalAction = async(
     });
     return journals;
 }
+
+
+export const fetchSpotsAction = async() =>{
+   const spots = await db.spot.findMany();
+   return spots;
+}

@@ -8,7 +8,6 @@ import { redirect } from 'next/navigation';
 
 async function CreateProfilePage() {
   const user = await currentUser();
-
   if (user?.privateMetadata?.hasProfile) redirect('/');
   return (
     <section>
