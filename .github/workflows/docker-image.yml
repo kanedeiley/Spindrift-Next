@@ -22,10 +22,8 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         
     - name: Build Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }} .
+      run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }} .
 
     - name: Push Docker image
-      run: |
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }}
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }}
 
