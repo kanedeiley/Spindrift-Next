@@ -19,7 +19,9 @@ COPY . .
 
 # Set the build argument
 ARG SUPABASE_URL
+ARG SUPABASE_KEY
 ENV SUPABASE_URL=${SUPABASE_URL}
+ENV SUPABASE_KEY=${SUPABASE_KEY}
 
 # Build the Next.js application
 RUN npm run build
