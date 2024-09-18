@@ -17,6 +17,10 @@ RUN npx prisma generate
 # Copy the rest of the application code
 COPY . .
 
+# Set the build argument
+ARG SUPABASE_URL
+ENV SUPABASE_URL=${SUPABASE_URL}
+
 # Build the Next.js application
 RUN npm run build
 
