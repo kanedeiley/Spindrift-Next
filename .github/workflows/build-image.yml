@@ -25,7 +25,8 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}  # Reference the secret
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-        run: docker build --build-arg SUPABASE_URL=$SUPABASE_URL --build-arg SUPABASE_KEY=$SUPABASE_KEY -t ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }} .
+        run: docker build --platform linux/arm64 --build-arg SUPABASE_URL=$SUPABASE_URL --build-arg SUPABASE_KEY=$SUPABASE_KEY -t ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }} .
+
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }}
