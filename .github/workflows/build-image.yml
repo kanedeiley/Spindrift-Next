@@ -27,6 +27,3 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: docker buildx build --platform linux/arm64 --build-arg SUPABASE_URL=$SUPABASE_URL --build-arg SUPABASE_KEY=$SUPABASE_KEY -t ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }} --push .
 
-
-      - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:${{ github.sha }}
