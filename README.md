@@ -65,7 +65,7 @@ Spindrift relies on the following data sources to provide accurate surf informat
 
 ## Contributing
 
-We welcome contributions from the open-source community. If you'd like to contribute to Spindrift, please follow our [Contribution Guidelines](CONTRIBUTING.md).
+We welcome contributions from the open-source community. If you'd like to contribute to Spindrift, please follow our [Contribution Guidelines](CONTRIBUTING.md)
 
 
 
