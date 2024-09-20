@@ -44,6 +44,8 @@ model Spot {
   height String
   tide String
   Journal Journal[]
+  state String?
+  region String?
 }
 
 model Journal {

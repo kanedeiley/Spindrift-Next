@@ -26,7 +26,7 @@ export default function RootLayout({
         <Providers>
         <Navbar></Navbar>
         <SpotsBar />
-        <main className="container py-10">{children}</main>
+        <main className="px-20 py-10">{children}</main>
         </Providers>
         </body>
     </html>
