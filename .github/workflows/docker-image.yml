@@ -3,7 +3,7 @@ name: Docker Image CI/CD
 
 on:
   push:
-    branches: [ "Master" ]
+    branches: [ "master" ]
 
 jobs:
   build:
