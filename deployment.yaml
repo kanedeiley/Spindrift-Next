@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spindrift-app
+spec:
+  replicas: 2  # Set to 2 replicas
+  selector:
+    matchLabels:
+      app: spindrift-app
+  template:
+    metadata:
+      labels:
+        app: spindrift-app
+    spec:
+      containers:
+      - name: spindrift-app
+        image: gdeiley0311/spindriftimageci:e07e3831286f252a8f9bb572c1eedf03dc2f63c5  # Your Docker image
+        ports:
+        - containerPort: 3000  # Application listens on port 3000
