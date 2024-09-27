@@ -177,3 +177,30 @@ export const fetchSpotsAction = async() =>{
    const spots = await db.spot.findMany();
    return spots;
 }
+
+export const fetchSpotAction = async({id}:{id:string}) =>{
+   /*const spot = await db.spot.findUnique({
+      where:{
+         id: id,
+      },
+})
+if(!spot) renderError("Spot not found.")
+return spot;
+*/
+const data: Data = {
+   id: 1,
+   name: "John Doe",
+   message: "Hello, this is your data!"
+ };
+
+return data; // Return the data after the delay
+
+}
+
+interface Data {
+   id: number;
+   name: string;
+   message: string;
+ }
+ 
+
