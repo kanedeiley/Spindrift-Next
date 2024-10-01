@@ -178,29 +178,25 @@ export const fetchSpotsAction = async() =>{
    return spots;
 }
 
-export const fetchSpotAction = async({id}:{id:string}) =>{
-   /*const spot = await db.spot.findUnique({
-      where:{
-         id: id,
+
+export const fetchFavoritesAction = async() =>{
+   const user = await getAuthUser();
+   const spots = await db.favorite.findMany({ where: {
+      profileID: user.id,
+    },
+   include: {
+      spot: {
+      select: {
+         name: true,
+         },
       },
-})
-if(!spot) renderError("Spot not found.")
-return spot;
-*/
-const data: Data = {
-   id: 1,
-   name: "John Doe",
-   message: "Hello, this is your data!"
- };
+   }, 
+   });
+   return spots;
+};
 
-return data; // Return the data after the delay
 
-}
 
-interface Data {
-   id: number;
-   name: string;
-   message: string;
- }
- 
+
+
 
