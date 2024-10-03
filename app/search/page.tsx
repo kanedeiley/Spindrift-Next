@@ -1,23 +1,25 @@
 "use client"
-import { fetchQueriedSpots } from "@/utils/actions"
 import { useSearchParams } from "next/navigation"
-import { useState, useEffect } from "react"
+import useSWR from "swr"
+
+
+const fetchData = async(url: string) =>{
+const response = await fetch(url);
+if(!response.ok){
+    throw new Error("Failed to fetch data")
+}
+return response.json()
+}
 
 function SearchPage() {
 const search = useSearchParams()
 const searchQ = search ? search.get("q") : ""
-const [spots, setSpots] = useState([]);
-
-const fetchSpots = async () => {
-const data = await fetchQueriedSpots({query: searchQ===null?"":searchQ, page:1})
-    console.log(data)
-  };
-
-  useEffect(() => {
-    fetchSpots();
-  }, []);
+const encodedSearchQ = encodeURI(searchQ || "")
+const { data, isLoading} = useSWR(`/api/search?q=${encodedSearchQ}`, fetchData)
+console.log(data)
 return (
     <div>
+        page
     </div>
   )
 }
