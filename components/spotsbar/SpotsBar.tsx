@@ -18,7 +18,7 @@ async function SpotsBar() {
         </div>
         </CarouselItem>
     )) : (
-      <CarouselItem key={1}  className="basis-1/4 border rounded p-2 mx-10 min-w-52">
+      <CarouselItem key={1}  className="basis-1/4 border rounded p-2 mx-10 min-w-60">
         <p> No Favorites Yet. </p> 
       </CarouselItem>
     )}

@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 import { uploadImage } from "./supabase";
 import { User } from "lucide-react";
 import { date } from "zod";
-
+import {SearchQuery} from "./querytypes"
 const getAuthUser = async()=>{
    const user = await currentUser();
    if(!user){
@@ -194,6 +194,44 @@ export const fetchFavoritesAction = async() =>{
    });
    return spots;
 };
+
+
+export const fetchQueriedSpots = async ({query, page}:SearchQuery ) =>{
+   const pageSize = 20;
+   const skip = (page - 1) * pageSize; // Calculate how many records to skip
+  // Query the database
+  const spots = await db.spot.findMany({
+    where: {
+      name: {
+        contains: query, // Search by name (can also use `startsWith` or `endsWith`)
+        mode: 'insensitive', // Make the search case-insensitive
+      },
+    },
+    skip: skip, // Skip the previous pages' items
+    take: pageSize, // Take only the number of records for the current page
+    select: {
+      name: true, // Select only the 'name' column
+    },
+   });
+
+  // Count total records to calculate total pages
+  const totalCount = await db.spot.count({
+    where: {
+      name: {
+        contains: query,
+        mode: 'insensitive',
+      },
+    },
+  });
+
+  // Return the results along with pagination data
+  return {
+    spots,
+    totalCount,
+    totalPages: Math.ceil(totalCount / pageSize),
+    currentPage: page,
+  };
+}
 
 
 
