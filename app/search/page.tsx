@@ -16,10 +16,16 @@ const search = useSearchParams()
 const searchQ = search ? search.get("q") : ""
 const encodedSearchQ = encodeURI(searchQ || "")
 const { data, isLoading} = useSWR(`/api/search?q=${encodedSearchQ}`, fetchData)
-console.log(data)
+if(!data?.spots){
+    return null;
+}
 return (
     <div>
-        page
+       
+            {data.spots.map((spot:any, i:number) =>(
+                <p key={i}>{spot.name}</p>
+            ))}
+      
     </div>
   )
 }
