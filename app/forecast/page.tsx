@@ -1,7 +1,13 @@
-function Forecastpage() {
-    return (
-      <div>Forecast page</div>
-    )
-  }
+import CoreCharts from "@/components/forecast/core/Corecharts"
+import Navbar from "@/components/navbar/Navbar"
+
+function Forecast() {
+  return (
+    <>
+    <CoreCharts />
   
-  export default Forecastpage
+    </>
+  )
+}
+
+export default Forecast

@@ -3,3 +3,7 @@ export interface SearchQuery {
     page: number
  }
  
+ export interface SectionLink{
+pagename: string,
+link: string
+ }

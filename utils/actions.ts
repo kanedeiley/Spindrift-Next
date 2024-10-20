@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 import { uploadImage } from "./supabase";
 import { User } from "lucide-react";
 import { date } from "zod";
-import {SearchQuery} from "./querytypes"
+import {SearchQuery} from "./extratypes"
 const getAuthUser = async()=>{
    const user = await currentUser();
    if(!user){
