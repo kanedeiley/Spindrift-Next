@@ -1,3 +1,11 @@
-export default function Page () {
-    return <div>Hello</div>
+import BarChartComponent from "@/components/charts/BarChartComponent";
+
+function Page() {
+
+  return (
+    <BarChartComponent
+    />
+  );
 }
+
+export default Page;

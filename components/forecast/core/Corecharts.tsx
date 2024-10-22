@@ -54,11 +54,11 @@ export function Corecharts() {
   }
   const coreConditions = [{CardTitle:"Wave Height",Value:"2-3ft", Image:<Waves className="h-4 w-4 text-muted-foreground"/>,Description:"Average Day"},{CardTitle:"Wind",Value:"2 mph",Image:<Wind className="h-4 w-4 text-muted-foreground" />,Description:"Below Average Day"}
     ,{CardTitle:"Tempature",Value:"65 F",Image:<Thermometer className="h-4 w-4 text-muted-foreground" />,Description:"Warm"},{CardTitle:"Weather",Value:"Sunny",Image:<CloudSunRain className="h-4 w-4 text-muted-foreground" />,Description:"Perfect"},{CardTitle:"Tide",Value:"Low",Image:<Moon className="h-4 w-4 text-muted-foreground" />
-      ,Description:"Changes in 3 Hours"},{CardTitle:"Rating",Value:"3.4/5", Image:<Star className="h-4 w-4 text-muted-foreground"/>}
+      ,Description:"Changes in 3 Hours"},{CardTitle:"Rating",Value:"3.4/5", Image:<Star className="h-4 w-4 text-muted-foreground"/>,Description:"Good"}
   ]
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-5">
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-6">
         {coreConditions.map((cc,i)=>(
           <Card x-chunk="dashboard-01-chunk-0" onClick={Message} key={i}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
