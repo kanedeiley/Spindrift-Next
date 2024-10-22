@@ -4,7 +4,7 @@ import { Input} from "../ui/input";
 import { useState } from "react";
 
 
-function NavSearch() {
+function NavSearch({ className }) {
   const [searchQ, setSearchQ] = useState("")
 const router = useRouter()
 const onSearch = (event: React.FormEvent) => {

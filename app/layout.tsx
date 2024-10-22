@@ -24,7 +24,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-        <Navbar></Navbar>
+        <Navbar>
+        </Navbar>
         <SpotsBar />
         <main className="px-20 py-10">{children}</main>
         </Providers>
