@@ -1,4 +1,5 @@
 "use client"
+import { Paginate } from "@/components/pagination/Paginate"
 import { useSearchParams } from "next/navigation"
 import useSWR from "swr"
 
@@ -25,7 +26,7 @@ return (
             {data.spots.map((spot:any, i:number) =>(
                 <p key={i}>{spot.name}</p>
             ))}
-      
+           <Paginate  className={"fixed bottom-1 left-1/2 transform -translate-x-1/2 flex justify-center fixed bottom-0"} q={searchQ ? searchQ : ""} page={1} count={data.totalCount}/>
     </div>
   )
 }

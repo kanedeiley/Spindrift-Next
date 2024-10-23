@@ -1,5 +1,6 @@
 import { fetchFavoritesAction } from '@/utils/actions';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../ui/carousel'
+import Link from 'next/link';
 
 async function SpotsBar() {
     const spots = await fetchFavoritesAction();
@@ -19,11 +20,11 @@ async function SpotsBar() {
         </CarouselItem>
     )) : (
       <CarouselItem key={1}  className="basis-1/4 border rounded p-2 mx-10 min-w-60 flex justify-between align-center hover:border-slateBlue">
-        <p> No Favorites Yet </p> 
+        <Link className="w-full h-full" href={"/find"}>
+        Add Favorites
+        </Link>
       </CarouselItem>
     )}
-  
-
   </CarouselContent>
   <CarouselPrevious />
   <CarouselNext />

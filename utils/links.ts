@@ -9,6 +9,5 @@ type NavLink = {
     { href: '/journal ', label: 'journal' },
     { href: '/journal/create ', label: 'create journal' },
     { href: '/compare ', label: 'compare' },
-    { href: '/admin', label: 'admin' },
     { href: '/profile ', label: 'profile' },
   ];
