@@ -17,22 +17,46 @@ import {
 
 
 export function Paginate({className, q, page, count}:PaginateProps) {
+const encodeQ = encodeURI(q)
+const oPage =  page>count?count:page
+const uPage = page<1?1:oPage
 return(
 <div className={className}>
 <Pagination>
   <PaginationContent>
+    { uPage > 1 && (
     <PaginationItem>
       <PaginationPrevious href="#" />
     </PaginationItem>
-    <PaginationItem>
-      <PaginationLink href="1">1</PaginationLink>
-    </PaginationItem>
+    )}
+    { uPage > 2  && (
     <PaginationItem>
       <PaginationEllipsis />
     </PaginationItem>
+    )}
+    { uPage > 1 && (
     <PaginationItem>
-      <PaginationNext href="#" />
+      <PaginationLink href={"/search?q=" + encodeQ}>{uPage-1}</PaginationLink>
     </PaginationItem>
+    )}
+    <PaginationItem>
+      <PaginationLink className="bg-gray-500 bg-opacity-20"  href="#">{uPage}</PaginationLink>
+    </PaginationItem>
+    { count > uPage  && (
+    <PaginationItem>
+      <PaginationLink href={"/search?q=" + encodeQ}>{uPage+1}</PaginationLink>
+    </PaginationItem>
+    )}
+     { count > uPage +1  && (
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    )}
+     {count > uPage  && (    
+    <PaginationItem >
+      <PaginationNext  href="#" />
+    </PaginationItem>
+     )}
   </PaginationContent>
 </Pagination>
 </div>
