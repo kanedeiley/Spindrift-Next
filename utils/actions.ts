@@ -197,7 +197,7 @@ export const fetchFavoritesAction = async() =>{
 
 
 export const fetchQueriedSpots = async ({query, page}:SearchQuery ) =>{
-   const pageSize = 20;
+   const pageSize = 2;
    const skip = (page - 1) * pageSize; // Calculate how many records to skip
   // Query the database
   const spots = await db.spot.findMany({

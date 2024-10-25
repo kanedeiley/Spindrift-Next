@@ -26,7 +26,7 @@ return(
   <PaginationContent>
     { uPage > 1 && (
     <PaginationItem>
-      <PaginationPrevious href="#" />
+      <PaginationPrevious href={"/search?q=" + encodeQ + "&page=" + (page-1)} />
     </PaginationItem>
     )}
     { uPage > 2  && (
@@ -36,7 +36,7 @@ return(
     )}
     { uPage > 1 && (
     <PaginationItem>
-      <PaginationLink href={"/search?q=" + encodeQ}>{uPage-1}</PaginationLink>
+      <PaginationLink href={"/search?q=" + encodeQ + "&page=" + (page-1)}>{uPage-1}</PaginationLink>
     </PaginationItem>
     )}
     <PaginationItem>
@@ -44,7 +44,7 @@ return(
     </PaginationItem>
     { count > uPage  && (
     <PaginationItem>
-      <PaginationLink href={"/search?q=" + encodeQ}>{uPage+1}</PaginationLink>
+      <PaginationLink href={"/search?q=" + encodeQ + "&page=" + (page+1)} >{uPage+1}</PaginationLink>
     </PaginationItem>
     )}
      { count > uPage +1  && (
@@ -54,7 +54,7 @@ return(
     )}
      {count > uPage  && (    
     <PaginationItem >
-      <PaginationNext  href="#" />
+      <PaginationNext  href={"/search?q=" + encodeQ + "&page=" + (page+1)} />
     </PaginationItem>
      )}
   </PaginationContent>
