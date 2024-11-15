@@ -1,11 +1,12 @@
 "use client"
 import React, {Suspense } from 'react';
 import Cards from '../load/Cards';
+import BarChartComponent from '../charts/BarChart';
 
 function Graph({id}:{id:number}) {
 return (
     <Suspense fallback={<Cards />}>
-    <h1> ID: {id} </h1>
+    <BarChartComponent />
   </Suspense>
   );
 }

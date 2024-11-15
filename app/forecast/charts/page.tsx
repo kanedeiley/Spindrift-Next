@@ -1,5 +1,5 @@
-import BarChartComponent from "@/components/charts/BarChartComponent";
-import LineChartComponent from "@/components/charts/LineChartComponent";
+import BarChartComponent from "@/components/charts/BarChart";
+import LineChartComponent from "@/components/charts/LineChart";
 
 function Page() {
 

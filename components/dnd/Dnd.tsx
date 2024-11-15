@@ -125,7 +125,7 @@ const DragDropLists: React.FC = () => {
                         {...provided.dragHandleProps}
                         className="p-2 mb-2 border rounded"
                       >
-                       <Graph id={graph.id} />
+                       <Graph id={graph.id} ></Graph>
                       </li>
                     )}
                   </Draggable>
