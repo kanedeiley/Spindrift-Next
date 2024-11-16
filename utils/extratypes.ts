@@ -7,3 +7,9 @@ export interface SearchQuery {
 pagename: string,
 link: string
  }
+
+export interface ChartDataItem {
+    date: string;
+    wave_height: number;
+    wind: number;
+  };

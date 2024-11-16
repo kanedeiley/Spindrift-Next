@@ -6,16 +6,23 @@ import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { uploadImage } from "./supabase";
-import { User } from "lucide-react";
-import { date } from "zod";
-import {SearchQuery} from "./extratypes"
+import {SearchQuery, ChartDataItem} from "./extratypes"
 const getAuthUser = async()=>{
    const user = await currentUser();
    if(!user){
       throw new Error('you must be logged in to access.');
    }
    if(!user.privateMetadata.hasProfile) redirect('/profile/create')
-   return user;
+      return user;
+}
+
+const getFavoritesUser = async()=>{
+   const user = await currentUser();
+   if(!user){
+      return undefined;
+   }
+   if(!user.privateMetadata.hasProfile) redirect('/profile/create')
+      return user;
 }
 
 const renderError = (error:unknown):{message:string}=>{
@@ -180,7 +187,10 @@ export const fetchSpotsAction = async() =>{
 
 
 export const fetchFavoritesAction = async() =>{
-   const user = await getAuthUser();
+   const user = await getFavoritesUser();
+   if(user === undefined){
+      return []
+   }
    const spots = await db.favorite.findMany({ where: {
       profileID: user.id,
     },
@@ -233,8 +243,42 @@ export const fetchQueriedSpots = async ({query, page}:SearchQuery ) =>{
   };
 }
 
-
-
+export const fetchChartData = ({id}:{id: number}):ChartDataItem[] => {
+      const chartData = [
+         { date: "2024-04-01", wave_height: 4, wind: 4 },
+         { date: "2024-04-01", wave_height: 222, wind: 150 },
+         { date: "2024-04-01", wave_height: 222, wind: 150 },
+         { date: "2024-04-01", wave_height: 222, wind: 150 },
+         { date: "2024-04-01", wave_height: 222, wind: 150 },
+         { date: "2024-04-01", wave_height: 222, wind: 150 },
+         { date: "2024-04-01", wave_height: 222, wind: 150 },
+         { date: "2024-04-01", wave_height: 222, wind: 150 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-02", wave_height: 97, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-03", wave_height: 100, wind: 180 },
+         { date: "2024-04-04", wave_height: 102, wind: 140 },
+         { date: "2024-04-04", wave_height: 102, wind: 140 },
+         { date: "2024-04-04", wave_height: 102, wind: 140 },
+         { date: "2024-04-04", wave_height: 102, wind: 140 },
+         { date: "2024-04-04", wave_height: 102, wind: 140 },
+         { date: "2024-04-04", wave_height: 102, wind: 140 },
+       ];
+       return chartData;
+ };
+ 
 
 
 

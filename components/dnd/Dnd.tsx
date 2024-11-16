@@ -1,33 +1,17 @@
 "use client"
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-import Graph from '../comparison/Graph';
+import ComparisonChart from '../charts/ComparisonChart';
 
 type Dd = { id: number, title: string} 
 type Dds = Dd[]
 
-const DragDropLists: React.FC = () => {
-  const [spots, setSpots] = useState<Dds>([
-        {
-        id: 2,
-        title: "sea girt",
-        },
-        {
-            id: 3,
-            title: "manasquan",
-            }
-    ]);
+function DragDropLists ({graphs, setGraphs}) {
 
-  const [graphs, setGraphs] = useState<Dds>([
-        {
-        id: 4,
-        title: "belmar",
-        },
-        {
-            id: 5,
-            title: "deal",
-            }
-    ]);
+    const removeGraphById = (id: number) => {
+      setGraphs((prevGraphs) => prevGraphs.filter((graph) => graph.id !== id));
+    };
+ 
 
     const onDragEnd = (result: DropResult): void => {
         const { source, destination } = result;
@@ -46,13 +30,13 @@ const DragDropLists: React.FC = () => {
           const sourceKey = source.droppableId;
           const destKey = destination.droppableId;
           const result = move(
-            spots,
+            graphs,
             graphs,
             source,
             destination
           );  
           setGraphs(result.graphs);
-          setSpots(result.spots);
+
         }
         else{
             return;
@@ -88,44 +72,25 @@ const DragDropLists: React.FC = () => {
     return result;
   };
 
+  if(graphs === undefined)
+    return <p>nothing</p>
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-10 justify-between">
-          <Droppable key={"spots"} droppableId={"spots"}>
-            {(provided) => (
-              <ul {...provided.droppableProps} ref={provided.innerRef} className="w-1/5 p-4">
-                {spots?.map((spot, index) => (
-                  <Draggable key={spot.id} draggableId={spot.title} index={index}>
-                    {(provided) => (
-                      <li
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="p-2 mb-2 border rounded"
-                      >
-                        {spot.title}
-                      </li>
-                    )}
-                  </Draggable>
-                  
-                ))}
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
+      <div className="w-full">
           <Droppable key={"graphs"} droppableId={"graphs"}>
             {(provided) => (
-              <ul {...provided.droppableProps} ref={provided.innerRef} className="w-4/5 p-4">
-                {graphs.map((graph, index) => (
-                  <Draggable key={graph.id} draggableId={graph.title } index={index}>
+              <ul {...provided.droppableProps} ref={provided.innerRef} className="w-full p-4">
+                {graphs?.map((graph, index) => (
+                  <Draggable key={graph.id} draggableId={graph.title } index={index} >
                     {(provided) => (
                       <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="p-2 mb-2 border rounded"
+                        className="p-2 mb-2 "
                       >
-                       <Graph id={graph.id} ></Graph>
+                       <ComparisonChart id={graph.id} name={graph.title} remove={removeGraphById}></ComparisonChart>
                       </li>
                     )}
                   </Draggable>

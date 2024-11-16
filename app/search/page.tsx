@@ -1,7 +1,6 @@
 "use client"
 import { Paginate } from "@/components/pagination/Paginate"
 import { useSearchParams } from "next/navigation"
-import { encode } from "punycode"
 import useSWR from "swr"
 
 
