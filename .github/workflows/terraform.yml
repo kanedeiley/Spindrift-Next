@@ -49,7 +49,7 @@ jobs:
         working-directory: ./terraform
 
       # Step 8: Apply the Terraform plan
-      - name: "Terraform Apply"
-        run: terraform apply -auto-approve tfplan
-        working-directory: ./terraform
+      # - name: "Terraform Apply"
+      #   run: terraform apply -auto-approve tfplan
+      #   working-directory: ./terraform
         # You can also use `terraform apply` directly, but this will prompt for approval. Using `-auto-approve` skips that.
