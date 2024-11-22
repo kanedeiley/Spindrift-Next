@@ -32,6 +32,7 @@ jobs:
       # Step 4: Install Terraform providers (if necessary)
       - name: "Install Terraform providers"
         run: terraform init
+        working-directory: ./terraform
 
       # Step 5: Format the Terraform code (optional but recommended)
       - name: "Terraform Format"
@@ -40,12 +41,15 @@ jobs:
       # Step 6: Validate the Terraform code
       - name: "Terraform Validate"
         run: terraform validate
+        working-directory: ./terraform
 
       # Step 7: Plan the Terraform execution (this is a dry run to show changes)
       - name: "Terraform Plan"
         run: terraform plan -out=tfplan
+        working-directory: ./terraform
 
       # Step 8: Apply the Terraform plan
       - name: "Terraform Apply"
         run: terraform apply -auto-approve tfplan
+        working-directory: ./terraform
         # You can also use `terraform apply` directly, but this will prompt for approval. Using `-auto-approve` skips that.
