@@ -1,0 +1,51 @@
+name: "Terraform CI/CD"
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the `main` branch
+
+jobs:
+  terraform:
+    name: "Run Terraform"
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: "Check out repository"
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Terraform
+      - name: "Set up Terraform"
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.5.0"  # Specify the version of Terraform to use
+
+      # Step 3: Configure AWS credentials (example for AWS)
+      - name: "Set up AWS credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: "us-east-1"
+
+      # Step 4: Install Terraform providers (if necessary)
+      - name: "Install Terraform providers"
+        run: terraform init
+
+      # Step 5: Format the Terraform code (optional but recommended)
+      - name: "Terraform Format"
+        run: terraform fmt -check -diff
+
+      # Step 6: Validate the Terraform code
+      - name: "Terraform Validate"
+        run: terraform validate
+
+      # Step 7: Plan the Terraform execution (this is a dry run to show changes)
+      - name: "Terraform Plan"
+        run: terraform plan -out=tfplan
+
+      # Step 8: Apply the Terraform plan
+      - name: "Terraform Apply"
+        run: terraform apply -auto-approve tfplan
+        # You can also use `terraform apply` directly, but this will prompt for approval. Using `-auto-approve` skips that.
