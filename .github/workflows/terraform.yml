@@ -2,7 +2,7 @@ name: "Terraform CI/CD"
 
 on:
   workflow_run:
-    workflows: ["docker-image"]  # This should match the name of your first workflow (docker-image)
+    workflows: ["Docker Image CI/CD"]  # This should match the name of your first workflow (docker-image)
     types:
       - completed  # Trigger after the first workflow completes (both success or failure)
 
