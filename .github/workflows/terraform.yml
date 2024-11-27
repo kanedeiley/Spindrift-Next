@@ -52,16 +52,16 @@ jobs:
         run: terraform plan -out=tfplan
         working-directory: ./terraform
 
-      # Step 8: Apply the Terraform plan (Deploy infrastructure)
-      - name: "Terraform Apply"
-        run: terraform apply -auto-approve tfplan
-        working-directory: ./terraform
+      # # Step 8: Apply the Terraform plan (Deploy infrastructure)
+      # - name: "Terraform Apply"
+      #   run: terraform apply -auto-approve tfplan
+      #   working-directory: ./terraform
 
-      # Step 9: Wait for 10 minutes (Pause for manual inspection)
-      - name: "Wait for 10 minutes to check the website"
-        run: sleep 600  # Sleep for 600 seconds (10 minutes)
+      # # Step 9: Wait for 10 minutes (Pause for manual inspection)
+      # - name: "Wait for 10 minutes to check the website"
+      #   run: sleep 600  # Sleep for 600 seconds (10 minutes)
 
-      # Step 10: Destroy Terraform infrastructure after inspection
-      - name: "Terraform Destroy"
-        run: terraform destroy -auto-approve
-        working-directory: ./terraform
+      # # Step 10: Destroy Terraform infrastructure after inspection
+      # - name: "Terraform Destroy"
+      #   run: terraform destroy -auto-approve
+      #   working-directory: ./terraform
