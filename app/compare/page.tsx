@@ -1,22 +1,27 @@
-import React from 'react'
-import { fetchSpotsAction } from '@/utils/actions'
+"use client"
 
-async function page() {
-const spots = await fetchSpotsAction();
-  return (
-    <div className="h-50 w-1/5 flex flex-col gap-5">
-        {spots.map((spot) => 
-        <div className="h-20 border rounded p-4 flex flex-col justify-between" key={spot.id}>
-            <h2>{spot.name}</h2>
-            <div className="flex flex-row justify-between">
-            <p className="text-xs">{spot.state}</p>
-            <p className="text-xs">{spot.region}</p>
-            </div>
-        </div>
-    )
+import DragDropLists from "@/components/dnd/Dnd"
+import SpotsList from "@/components/lists/SpotsList"
+import { useState } from "react"
+
+
+function Page() {
+
+const [graphs,setGraphs] = useState([
+    {
+    id: 4,
+    title: "belmar",
+    },
+    {
+        id: 5,
+        title: "deal",
     }
-    </div>
-  )
+])
+return (
+<div className="flex justify-between gap-4 ">
+<SpotsList className="w-[250px]"/>
+<DragDropLists graphs={graphs} setGraphs={setGraphs}/>
+</div>
+)
 }
-
-export default page
+export default Page
