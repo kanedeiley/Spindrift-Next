@@ -4,7 +4,7 @@ function
 Find() {
   return (
     <div>
-        find
+        finding
     </div>
   )
 }
