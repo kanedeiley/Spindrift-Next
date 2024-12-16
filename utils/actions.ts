@@ -276,6 +276,11 @@ export const fetchChartData = ({id}:{id: number}):ChartDataItem[] => {
        ];
        return chartData;
  };
+
+ export const fetchMapSpots = (p0: { southWestLat: string | string[] | undefined; southWestLng: string | string[] | undefined; northEastLat: string | string[] | undefined; northEastLng:  string | string[] | undefined;}) =>{
+   console.log(p0);
+   return null
+ }
  
 
 
