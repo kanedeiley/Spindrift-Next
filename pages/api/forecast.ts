@@ -39,6 +39,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const utcOffsetSeconds = response.utcOffsetSeconds();
                 const hourly = response.hourly()!;
 
+
+                const wind_params = {
+                    "latitude": 52.52,
+                    "longitude": 13.41,
+                    "hourly": ["wind_speed_10m", "wind_direction_10m"]
+                };
+                const wind_url = "https://api.open-meteo.com/v1/forecast";
+                const wind_responses = await fetchWeatherApi(wind_url, wind_params);
+                const wind_response = wind_responses[0];
+                const wind_hourly = wind_response.hourly()!;
+
                 const weatherData = {
                     hourly: {
                         time: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
@@ -54,6 +65,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         swellWaveDirection: hourly.variables(7)!.valuesArray()!,
                         swellWavePeriod: hourly.variables(8)!.valuesArray()!,
                         ratings: ratings,
+                        windSpeed10m: wind_hourly.variables(0)!.valuesArray()!,
+                        windDirection10m: wind_hourly.variables(1)!.valuesArray()!,
                     },
 
                 };
