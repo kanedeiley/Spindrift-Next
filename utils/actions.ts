@@ -281,6 +281,15 @@ export const fetchChartData = ({id}:{id: number}):ChartDataItem[] => {
    console.log(p0);
    return null
  }
+
+ export const fetchSpot = async ({spotID}:{spotID: string}) => {
+   const spot = await db.spot.findUnique({
+      where:{
+         id:spotID,
+      },
+});
+   return spot
+ }
  
 
 

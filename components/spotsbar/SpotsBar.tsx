@@ -10,6 +10,7 @@ async function SpotsBar() {
     {spots.length > 0 ? (
   spots?.map((s) => 
     <CarouselItem key={s.id}  className="basis-1/4 border rounded p-2 mx-10 min-w-52">
+      <Link href={"/forecast/" + s.spotID}>
         <div className="flex flex-row gap-5 w-full h-full justify-between px-2">
         <div className="rounded-full text-red-500 h-4 w-4 my-auto bg-red-400">
         </div>
@@ -17,6 +18,7 @@ async function SpotsBar() {
         <p>12 kt</p>
         <p>2-3 ft</p>
         </div>
+        </Link>
         </CarouselItem>
     )) : (
       <CarouselItem key={1}  className="basis-1/4 border rounded p-2 mx-10 min-w-60 flex justify-between align-center hover:border-slateBlue">
