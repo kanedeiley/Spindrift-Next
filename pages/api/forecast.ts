@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 const weatherData = {
                     hourly: {
-                        time: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
+                        date: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
                             (t) => new Date((t + utcOffsetSeconds) * 1000)
                         ),
                         waveHeight: hourly.variables(0)!.valuesArray()!,
