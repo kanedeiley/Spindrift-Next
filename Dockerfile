@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base image
-#test
+#tests
 FROM node:20-alpine
 
 # Set the working directory inside the container
