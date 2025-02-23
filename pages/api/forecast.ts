@@ -90,6 +90,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const wind_hourly = wind_response.hourly()!;
 
                 const weatherData = {
+                    spot: {
+                        title: spot?.name
+                    },
                     hourly: {
                         date: range(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
                             (t) => new Date((t + utcOffsetSeconds) * 1000)

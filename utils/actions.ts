@@ -140,9 +140,6 @@ export const createJournalAction = async(
       console.log(rawData);
       
       const validatedFields = validateWithZodSchema(journalSchema, rawData);
-      //const validatedFile = validateWithZodSchema(imageSchema, { image: file });
-      //const fullPath = await uploadImage(validatedFile.image);
-  
       await db.journal.create({
         data: {
           ...validatedFields,
@@ -240,43 +237,6 @@ export const fetchQueriedSpots = async ({query, page}:SearchQuery ) =>{
     currentPage: page,
   };
 }
-
-export const fetchChartData = ({id}:{id: number}):ChartDataItem[] => {
-      const chartData = [
-         { date: "2024-04-01", wave_height: 4, wind: 4 },
-         { date: "2024-04-01", wave_height: 222, wind: 150 },
-         { date: "2024-04-01", wave_height: 222, wind: 150 },
-         { date: "2024-04-01", wave_height: 222, wind: 150 },
-         { date: "2024-04-01", wave_height: 222, wind: 150 },
-         { date: "2024-04-01", wave_height: 222, wind: 150 },
-         { date: "2024-04-01", wave_height: 222, wind: 150 },
-         { date: "2024-04-01", wave_height: 222, wind: 150 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-02", wave_height: 97, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-03", wave_height: 100, wind: 180 },
-         { date: "2024-04-04", wave_height: 102, wind: 140 },
-         { date: "2024-04-04", wave_height: 102, wind: 140 },
-         { date: "2024-04-04", wave_height: 102, wind: 140 },
-         { date: "2024-04-04", wave_height: 102, wind: 140 },
-         { date: "2024-04-04", wave_height: 102, wind: 140 },
-         { date: "2024-04-04", wave_height: 102, wind: 140 },
-       ];
-       return chartData;
- };
-
  export const fetchMapSpots = (p0: { southWestLat: string | string[] | undefined; southWestLng: string | string[] | undefined; northEastLat: string | string[] | undefined; northEastLng:  string | string[] | undefined;}) =>{
    console.log(p0);
    return null

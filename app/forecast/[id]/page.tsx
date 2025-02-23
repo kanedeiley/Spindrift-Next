@@ -39,7 +39,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      <SpotHeader title={"Test"} />
+      <SpotHeader title={data.spot.title} />
       <CoreCharts data={formedData} />
       <WaveHeightChart data={formedData} />
       <WindSpeedChart data={formedData} />
