@@ -16,51 +16,21 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-// Type for chart data
-type ChartData = {
-  date: string; // Store the date as a string
-  wave_height: number;
-  wind: number;
-};
+
+
 
 export const description = "An interactive bar chart";
 
-export function BarChart({data}) {
-  const [chartData, setChartData] = React.useState<ChartData[]>([]);
-  const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>("wave_height");
+export function WaveHeightChart({ data }) {
 
-  // Fetching data from the API
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const latitude = "40.1315";
-        const longitude = "-74.0273";
-        const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${latitude}&longitude=${longitude}&hourly=wave_height&length_unit=imperial&forecast_days=3`;
-
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Network response was not ok");
-
-        const data = await response.json();
-        const hours = data.hourly;
-
-        // Format the data
-        const formattedData = hours.time.map((time: string, index: number) => {
-          const waveHeightInMeters = hours.wave_height[index] ?? 0; // Handle missing data
-          return {
-            date: new Date(time).toISOString(), // Store the date as an ISO string
-            wave_height: waveHeightInMeters,
-            wind: 180, // Placeholder for wind data
-          };
-        });
-
-        setChartData(formattedData); // Set the formatted data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+  const formattedData = data.hourly.date.map((time: string, index: number) => {
+    const waveHeight = data.hourly.waveHeight[index] ?? 0; // Handle missing data
+    return {
+      date: new Date(time).toISOString(), // Store the date as an ISO string
+      wave_height: waveHeight,
+      wind: 180, // Placeholder for wind data
     };
-
-    fetchData();
-  }, []);
+  });
 
   // Config for the chart
   const chartConfig = {
@@ -68,14 +38,6 @@ export function BarChart({data}) {
     wave_height: { label: "Wave Height", color: "hsl(var(--chart-1))" },
     // wind: { label: "Wind", color: "hsl(var(--chart-2))" },
   };
-
-  const total = React.useMemo(
-    () => ({
-      wave_height: chartData.reduce((acc, curr) => acc + curr.wave_height, 0),
-      wind: chartData.reduce((acc, curr) => acc + curr.wind, 0),
-    }),
-    [chartData]
-  );
 
   return (
     <Card>
@@ -89,7 +51,7 @@ export function BarChart({data}) {
       <CardContent className="px-2 sm:p-6">
         <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
           <RechartsBarChart
-            data={chartData} // Serialized date strings
+            data={formattedData} // Serialized date strings
             margin={{ left: 12, right: 12, top: 12, bottom: 12 }}
           >
             <CartesianGrid vertical={false} />
@@ -127,7 +89,7 @@ export function BarChart({data}) {
                 />
               }
             />
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
+            <Bar dataKey={"wave_height"} fill={`var(--color-${"wave_height"})`} />
           </RechartsBarChart>
         </ChartContainer>
       </CardContent>
@@ -135,4 +97,4 @@ export function BarChart({data}) {
   );
 }
 
-export default BarChart;
+export default WaveHeightChart;
