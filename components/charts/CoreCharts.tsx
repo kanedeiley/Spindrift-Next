@@ -33,10 +33,10 @@ export function Corecharts({ data }) {
   const index = currentIndex(data.hourly.date)
   const Currents = {
     WaveHeight: data.hourly.waveHeight[index],
-    WindSpeed: data.hourly.windSpeed10m[index],
-    Rating: data.hourly.ratings[index]
-    //WaveHeight: data.hourly.waveHeight[index]
-    //WaveHeight: data.hourly.waveHeight[index]
+    WindSpeed: Math.round(data.hourly.windSpeed10m[index]),
+    Rating: data.hourly.ratings[index],
+    WeatherCode: data.hourly.weatherCode[index],
+    Tempature: Math.round(data.hourly.temperature2m[index])
 
   }
 
@@ -58,13 +58,13 @@ export function Corecharts({ data }) {
     },
     {
       CardTitle: "Temperature",
-      Value: "65 F",
+      Value: Currents.Tempature,
       Image: <Thermometer className="h-4 w-4 text-muted-foreground" />,
       Description: "Warm",
     },
     {
       CardTitle: "Weather",
-      Value: "Sunny",
+      Value: Currents.WeatherCode,
       Image: <CloudSunRain className="h-4 w-4 text-muted-foreground" />,
       Description: "Perfect",
     },
