@@ -5,70 +5,54 @@ import { Waves } from "lucide-react"; // Assuming you're using this for the wave
 import { Wind, Thermometer, CloudSunRain, Star, Moon } from "lucide-react"; // Import necessary icons
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-type ChartData = {
-  date: string; // Store the date as a string
-  wave_height: number;
-  wind: number;
-};
+function currentIndex(dates) {
+  const now = new Date();  // Get the current date and time
 
-export function Corecharts() {
-  const [chartData, setChartData] = React.useState<ChartData[]>([]);
-  const [waveHeight, setWaveHeight] = React.useState<string>("Loading...");
+  let closestIndex = 0;
+  let smallestDiff = Math.abs(new Date(dates[0]).getTime() - now.getTime()); // Initialize with the first date's difference
 
-  // Fetching wave height and wind data from the API
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const latitude = "40.1315";
-        const longitude = "-74.0273";
-        const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${latitude}&longitude=${longitude}&hourly=wave_height&length_unit=imperial&forecast_days=3`;
+  // Loop through the list of dates
+  for (let i = 1; i < dates.length; i++) {
+    const currentDate = new Date(dates[i]);
+    const diff = Math.abs(currentDate.getTime() - now.getTime()); // Calculate the difference with the current date
 
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Network response was not ok");
+    // Update if we find a closer date
+    if (diff < smallestDiff) {
+      smallestDiff = diff;
+      closestIndex = i;
+    }
+  }
 
-        const data = await response.json();
-        const hours = data.hourly;
+  return closestIndex;  // Return the index of the closest date
+}
 
-        // Format the data
-        const formattedData = hours.time.map((time: string, index: number) => {
-          const waveHeightInFeet = hours.wave_height[index] ?? 0; // Handle missing data
-          return {
-            date: new Date(time).toISOString(), // Store the date as an ISO string
-            wave_height: waveHeightInFeet,
-            wind: 180, // Placeholder for wind data
-          };
-        });
 
-        setChartData(formattedData); // Set the formatted data
+export function Corecharts({ data }) {
 
-        // Get the wave height for the current hour
-        const currentHour = new Date().getHours();
-        const currentWaveHeight = formattedData.find(
-          (data) => new Date(data.date).getHours() === currentHour
-        )?.wave_height;
 
-        if (currentWaveHeight) {
-          setWaveHeight(`${currentWaveHeight} ft`); // Update the wave height for the current hour
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setWaveHeight("Error fetching data");
-      }
-    };
+  const index = currentIndex(data.hourly.date)
+  const Currents = {
+    WaveHeight: data.hourly.waveHeight[index],
+    WindSpeed: data.hourly.windSpeed10m[index],
+    Rating: data.hourly.ratings[index]
+    //WaveHeight: data.hourly.waveHeight[index]
+    //WaveHeight: data.hourly.waveHeight[index]
 
-    fetchData();
-  }, []);
+  }
+
+
+
 
   const coreConditions = [
     {
       CardTitle: "Wave Height",
-      Value: waveHeight,
+      Value: Currents.WaveHeight,
       Image: <Waves className="h-4 w-4 text-muted-foreground" />,
       Description: "Current Wave Forecast",
     },
     {
       CardTitle: "Wind",
-      Value: "2 mph",
+      Value: Currents.WindSpeed,
       Image: <Wind className="h-4 w-4 text-muted-foreground" />,
       Description: "Below Average Day",
     },
@@ -92,7 +76,7 @@ export function Corecharts() {
     },
     {
       CardTitle: "Rating",
-      Value: "3.4/5",
+      Value: Currents.Rating,
       Image: <Star className="h-4 w-4 text-muted-foreground" />,
       Description: "Good",
     },
