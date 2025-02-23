@@ -8,7 +8,7 @@ function providers({children}:{children:React.ReactNode}) {
     <>
     <Toaster />
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <DateRangeProvider >
+    <DateRangeProvider >
     {children}
     </DateRangeProvider>
     </ThemeProvider>
