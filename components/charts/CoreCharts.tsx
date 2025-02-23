@@ -32,7 +32,7 @@ export function Corecharts({ data }) {
 
   const index = currentIndex(data.hourly.date)
   const Currents = {
-    WaveHeight: data.hourly.waveHeight[index],
+    WaveHeight: Math.round(data.hourly.waveHeight[index]),
     WindSpeed: Math.round(data.hourly.windSpeed10m[index]),
     Rating: data.hourly.ratings[index],
     WeatherCode: data.hourly.weatherCode[index],
