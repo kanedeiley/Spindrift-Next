@@ -20,9 +20,6 @@ RUN npx prisma generate
 # Copy the rest of the application code
 COPY . .
 
-# Copy environment variables
-COPY .env .env
-
 # Ensure all dependencies are updated
 RUN npx update-browserslist-db@latest || true
 
