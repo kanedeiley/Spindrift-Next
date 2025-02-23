@@ -18,7 +18,7 @@ RUN npx prisma generate
 # Copy the rest of the application code
 COPY . .
 
-# Set the build argument
+# Set the build arguments
 ARG SUPABASE_URL
 ARG SUPABASE_KEY
 ARG DATABASE_URL
