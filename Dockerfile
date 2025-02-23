@@ -1,11 +1,8 @@
-# Use the official Node.js image (Alpine-based)
-FROM node:20-alpine
+# Use a non-Alpine Node.js image (Debian-based)
+FROM node:20
 
 # Set the working directory inside the container
 WORKDIR /app
-
-# Install OpenSSL (needed by Prisma)
-RUN apk add --no-cache libssl1.1
 
 # Copy the package.json and package-lock.json (or yarn.lock) files
 COPY package*.json ./
