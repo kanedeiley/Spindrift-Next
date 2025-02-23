@@ -1,6 +1,5 @@
-# Use the official Node.js image as a base image
-#tests
-FROM node:20-alpine
+# Use a non-Alpine Node.js image (Debian-based)
+FROM node:20
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -18,7 +17,7 @@ RUN npx prisma generate
 # Copy the rest of the application code
 COPY . .
 
-# Set the build argument
+# Set the build arguments
 ARG SUPABASE_URL
 ARG SUPABASE_KEY
 ARG DATABASE_URL
@@ -28,7 +27,7 @@ ARG CLERK_SECRET_KEY
 ARG NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL
 ARG NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL
 
-
+# Set environment variables
 ENV DATABASE_URL=${DATABASE_URL}
 ENV DIRECT_URL=${DIRECT_URL}
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
