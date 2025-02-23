@@ -1,9 +1,11 @@
-# Use the official Node.js image as a base image
-#tests
+# Use the official Node.js image (Alpine-based)
 FROM node:20-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
+
+# Install OpenSSL (needed by Prisma)
+RUN apk add --no-cache libssl1.1
 
 # Copy the package.json and package-lock.json (or yarn.lock) files
 COPY package*.json ./
@@ -28,7 +30,7 @@ ARG CLERK_SECRET_KEY
 ARG NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL
 ARG NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL
 
-
+# Set environment variables
 ENV DATABASE_URL=${DATABASE_URL}
 ENV DIRECT_URL=${DIRECT_URL}
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
