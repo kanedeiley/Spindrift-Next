@@ -91,3 +91,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.leaflet-popup-content-wrapper {
+  background: transparent !important; /* Removes white background */
+  box-shadow: none !important; /* Removes border shadow */
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-tip {
+  display: none !important; /* Removes the popup arrow */
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 0 !important; /* Removes default margins */
+  width: auto !important;
+}

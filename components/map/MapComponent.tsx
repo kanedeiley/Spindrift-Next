@@ -6,12 +6,14 @@ import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import useSWR from 'swr';
+import Link from 'next/link';
+import { Button } from '../ui/button';
 
 
 let DefaultIcon = L.icon({
     iconUrl: icon.src,
     shadowUrl: iconShadow.src,
-    iconSize: [25, 41],
+    iconSize: [40, 41],
     iconAnchor: [12, 41]
 });
 
@@ -40,10 +42,16 @@ interface Bounds {
     }
     return response.json()
     }
+
+    function normalizeCord(cord: number): number {
+        return ((cord + 180) % 360 + 360) % 360 - 180;
+      }
+
+
     
     
 const MapComponent: React.FC<MapProps> = ({
-    center = [51.505, -0.09],
+    center = [40.13139914802585, -74.03767876532524],
     zoom = 13
   }) => {
       const [bounds, setBounds] = useState<Bounds | null>(null);
@@ -82,12 +90,12 @@ const MapComponent: React.FC<MapProps> = ({
                   const currentBounds = map.getBounds();
                   const newBounds = {
                       _southWest: {
-                          lat: currentBounds.getSouthWest().lat,
-                          lng: currentBounds.getSouthWest().lng,
+                          lat: normalizeCord(currentBounds.getSouthWest().lat),
+                          lng: normalizeCord(currentBounds.getSouthWest().lng),
                       },
                       _northEast: {
-                          lat: currentBounds.getNorthEast().lat,
-                          lng: currentBounds.getNorthEast().lng,
+                          lat: normalizeCord(currentBounds.getNorthEast().lat),
+                          lng: normalizeCord(currentBounds.getNorthEast().lng),
                       },
                   };
   
@@ -121,6 +129,7 @@ const MapComponent: React.FC<MapProps> = ({
                   <MapContainer
                       center={center}
                       zoom={zoom}
+                      minZoom={5}
                       scrollWheelZoom={false}
                       className="h-full w-full z-0"
                       style={{ height: '100%', width: '100%' }}
@@ -130,11 +139,50 @@ const MapComponent: React.FC<MapProps> = ({
                           url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
                       />
                       <BoundsFetcher />
-                      <Marker position={center}>
-                          <Popup>
-                              A pretty CSS3 popup. <br /> Easily customizable.
-                          </Popup>
-                      </Marker>
+                      {spots?.map((spot, i) => {
+                        const spotIcon = L.divIcon({
+                            html: `<div style="
+                            background-color: rgba(139, 0, 0, 0.6);
+                            opacity: .8;
+                            color:white;
+                            padding: 5px 5px;
+                            border-radius: 200px;
+                            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+                            font-size: 14px;
+                            font-weight: bold;
+                            text-align: center;
+                            ">2-3ft</div>`,
+                            className: "", 
+                            iconSize: [100, 40], 
+                            iconAnchor: [50, 40], 
+                        });
+                        return (
+                        <Marker key={i} position={[spot.latitude, spot.longitude]} icon={spotIcon}>
+                         <Popup className="custom-popup">
+                            <div className="p-4 bg-gray-900 text-white rounded-lg shadow-lg w-64">
+                            {/* Title */}
+                            <h3 className="text-lg font-bold">{spot.name}</h3>
+
+                            {/* Location info */}
+                            <p className="text-sm text-gray-300">🌍</p>
+
+                            {/* Wave rating (example dynamic data) */}
+                            <p className="text-md mt-2">
+                                🌊 Wave Quality: <span className="font-semibold text-yellow-400">Good</span>
+                            </p>
+
+                            {/* Forecast button */}
+                            <Link href={`/forecast/${spot.id}`}>
+                                <Button className="mt-3 bg-slate-500 text-white py-2 px-4 rounded-md w-full">
+                                View Forecast →
+                                </Button>
+                            </Link>
+                            </div>
+                        </Popup>
+                    </Marker>)}
+                        )
+                        }
+                      
                   </MapContainer>
               </div>
           );
