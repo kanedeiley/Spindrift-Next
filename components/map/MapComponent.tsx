@@ -8,12 +8,12 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-
+import debounce from 'lodash.debounce';
 
 let DefaultIcon = L.icon({
     iconUrl: icon.src,
     shadowUrl: iconShadow.src,
-    iconSize: [40, 41],
+    iconSize: [25, 41],
     iconAnchor: [12, 41]
 });
 
@@ -34,95 +34,79 @@ interface Bounds {
   _northEast: LatLng;
 }
 
-
-  const fetchData = async(url: string) =>{
+const fetchData = async(url: string) =>{
     const response = await fetch(url);
     if(!response.ok){
         throw new Error("Failed to fetch data")
     }
     return response.json()
-    }
+}
 
-    function normalizeCord(cord: number): number {
-        return ((cord + 180) % 360 + 360) % 360 - 180;
-      }
-
-
-    
-    
 const MapComponent: React.FC<MapProps> = ({
     center = [40.13139914802585, -74.03767876532524],
     zoom = 13
-  }) => {
-      const [bounds, setBounds] = useState<Bounds | null>(null);
-      const boundsRef = useRef<Bounds | null>(null);
-  
-      const { data: spots, isValidating } = useSWR(
-          bounds
-            ? `/api/bounds?southWestLat=${bounds._southWest.lat}&southWestLng=${bounds._southWest.lng}&northEastLat=${bounds._northEast.lat}&northEastLng=${bounds._northEast.lng}`
-            : null,
-          fetchData
-      );
-     
-      const BoundsFetcher: React.FC = () => {
-          const map = useMap();
-     
-          const shouldUpdateBounds = useCallback((newBounds: Bounds) => {
-              // Compare new bounds with previous bounds
-              if (!boundsRef.current) return true;
-  
-              const oldBounds = boundsRef.current;
-              const boundsChanged = 
-                  Math.abs(newBounds._southWest.lat - oldBounds._southWest.lat) > 0.01 ||
-                  Math.abs(newBounds._southWest.lng - oldBounds._southWest.lng) > 0.01 ||
-                  Math.abs(newBounds._northEast.lat - oldBounds._northEast.lat) > 0.01 ||
-                  Math.abs(newBounds._northEast.lng - oldBounds._northEast.lng) > 0.01;
-  
-              return boundsChanged;
-          }, []);
-  
-          useEffect(() => {
-              // Dispatch resize to handle any initial map rendering issues
-              window.dispatchEvent(new Event('resize'));
-  
-              // Throttle function to limit updates
-              const updateBounds = () => {
-                  const currentBounds = map.getBounds();
-                  const newBounds = {
-                      _southWest: {
-                          lat: normalizeCord(currentBounds.getSouthWest().lat),
-                          lng: normalizeCord(currentBounds.getSouthWest().lng),
-                      },
-                      _northEast: {
-                          lat: normalizeCord(currentBounds.getNorthEast().lat),
-                          lng: normalizeCord(currentBounds.getNorthEast().lng),
-                      },
-                  };
-  
-                  // Only update if bounds have changed significantly
-                  if (shouldUpdateBounds(newBounds)) {
-                      boundsRef.current = newBounds;
-                      setBounds(newBounds);
-                  }
-              };
-  
-              // Update bounds when the map moves or zooms
-              map.on('moveend', updateBounds);
-              map.on('zoomend', updateBounds);
-  
-              // Initial bounds fetch
-              updateBounds();
-  
-              // Cleanup event listeners on unmount
-              return () => {
-                  map.off('moveend', updateBounds);
-                  map.off('zoomend', updateBounds);
-              };
-          }, [map, shouldUpdateBounds]);
-  
-          return null;
-      };
-      
+}) => {
+    const [bounds, setBounds] = useState<Bounds | null>(null);
+    const boundsRef = useRef<Bounds | null>(null);
+
+    const { data: spots, isValidating } = useSWR(
+        bounds
+          ? `/api/bounds?southWestLat=${bounds._southWest.lat}&southWestLng=${bounds._southWest.lng}&northEastLat=${bounds._northEast.lat}&northEastLng=${bounds._northEast.lng}`
+          : null,
+        fetchData
+    );
+   
+    const BoundsFetcher: React.FC = () => {
+        const map = useMap();
+   
+        const shouldUpdateBounds = useCallback((newBounds: Bounds) => {
+            if (!boundsRef.current) return true;
+
+            const oldBounds = boundsRef.current;
+            const boundsChanged = 
+                Math.abs(newBounds._southWest.lat - oldBounds._southWest.lat) > 0.01 ||
+                Math.abs(newBounds._southWest.lng - oldBounds._southWest.lng) > 0.01 ||
+                Math.abs(newBounds._northEast.lat - oldBounds._northEast.lat) > 0.01 ||
+                Math.abs(newBounds._northEast.lng - oldBounds._northEast.lng) > 0.01;
+
+            return boundsChanged;
+        }, []);
+
+        useEffect(() => {
+            window.dispatchEvent(new Event('resize'));
+              
+            const updateBounds = debounce(() => {
+                const currentBounds = map.getBounds();
+                const newBounds = {
+                    _southWest: {
+                        lat: currentBounds.getSouthWest().lat,
+                        lng: currentBounds.getSouthWest().lng,
+                    },
+                    _northEast: {
+                        lat: currentBounds.getNorthEast().lat,
+                        lng: currentBounds.getNorthEast().lng,
+                    },
+                };
+
+                if (shouldUpdateBounds(newBounds)) {
+                    boundsRef.current = newBounds;
+                    setBounds(newBounds);
+                }
+            }, 300); // Adjust the debounce delay as needed
+
+            map.on('moveend', updateBounds);
+            map.on('zoomend', updateBounds);
+
+            updateBounds();
+
+            return () => {
+                map.off('moveend', updateBounds);
+                map.off('zoomend', updateBounds);
+            };
+        }, [map, shouldUpdateBounds]);
+
+        return null;
+    };
         
           return (
               <div className="h-[500px] w-full">
