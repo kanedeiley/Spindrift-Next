@@ -204,7 +204,7 @@ export const fetchFavoritesAction = async() =>{
 
 
 export const fetchQueriedSpots = async ({query, page}:SearchQuery ) =>{
-   const pageSize = 20;
+   const pageSize = 3;
    const skip = (page - 1) * pageSize; // Calculate how many records to skip
   // Query the database
   const spots = await db.spot.findMany({
@@ -237,9 +237,32 @@ export const fetchQueriedSpots = async ({query, page}:SearchQuery ) =>{
     currentPage: page,
   };
 }
- export const fetchMapSpots = (p0: { southWestLat: string | string[] | undefined; southWestLng: string | string[] | undefined; northEastLat: string | string[] | undefined; northEastLng:  string | string[] | undefined;}) =>{
-   console.log(p0);
-   return null
+ export const fetchMapSpots = async (p0: { southWestLat: string | string[] | undefined; southWestLng: string | string[] | undefined; northEastLat: string | string[] | undefined; northEastLng:  string | string[] | undefined;}) =>{
+     // Convert values to numbers (handles both string and array cases)
+  
+const southWestLat = Number(Array.isArray(p0.southWestLat) ? p0.southWestLat[0] : p0.southWestLat);
+  const southWestLng = Number(Array.isArray(p0.southWestLng) ? p0.southWestLng[0] : p0.southWestLng);
+  const northEastLat = Number(Array.isArray(p0.northEastLat) ? p0.northEastLat[0] : p0.northEastLat);
+  const northEastLng = Number(Array.isArray(p0.northEastLng) ? p0.northEastLng[0] : p0.northEastLng);
+   
+   try {
+      const spots = await db.spot.findMany({
+        where: {
+          latitude: {
+            gte: southWestLat, // Greater than or equal to SW latitude
+            lte: northEastLat, // Less than or equal to NE latitude
+          },
+          longitude: {
+            gte: southWestLng, // Greater than or equal to SW longitude
+            lte: northEastLng, // Less than or equal to NE longitude
+          },
+        },
+      });
+      return spots;
+    } catch (error) {
+      console.error("Error fetching spots:", error);
+      return [];
+    }
  }
 
  export const fetchSpot = async ({spotID}:{spotID: string}) => {
