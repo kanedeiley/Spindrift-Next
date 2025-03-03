@@ -79,3 +79,15 @@ model Favorite {
   spot Spot @relation(fields: [spotID], references: [id])
   spotID String
 }
+
+model Danger {
+  id String @id @default(uuid())
+  description String
+  severity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nwlatitude Decimal @db.Decimal(10,8)
+  nwlongitude Decimal @db.Decimal(10,8)
+  swlatitude Decimal @db.Decimal(10,8)
+  swlongitude Decimal @db.Decimal(10,8)
+}
