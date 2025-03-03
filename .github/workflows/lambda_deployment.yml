@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install zip tool
         uses: montudor/action-zip@v1
-      - name: Change directory to lambda/danger/src and create Zip file for Lambda function
+      - name: Create Zip file for Lambda function
         run: |
-          cd lambda/danger/src
-          zip -r ../../../../code.zip .
+          cd lambda/danger
+          zip -r ../../../code.zip .
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
         with:
