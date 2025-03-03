@@ -80,11 +80,17 @@ export function Corecharts({ data }) {
       Image: <Star className="h-4 w-4 text-muted-foreground" />,
       Description: "Good",
     },
+    {
+      CardTitle: "Water Temp",
+      Value: Currents.Rating,
+      Image: <Star className="h-4 w-4 text-muted-foreground" />,
+      Description: "Good",
+    }
   ];
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-6">
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-7">
         {coreConditions.map((cc, i) => (
           <Card x-chunk="dashboard-01-chunk-0" key={i}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
