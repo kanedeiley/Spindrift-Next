@@ -21,7 +21,6 @@ const getFavoritesUser = async()=>{
    if(!user){
       return undefined;
    }
-   if(!user.privateMetadata.hasProfile) redirect('/profile/create')
       return user;
 }
 
