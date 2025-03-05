@@ -13,6 +13,8 @@ RUN npm install
 # Install optional dependencies
 RUN npm install sharp
 
+RUN apk add --no-cache openssl
+
 # Copy the Prisma schema and generate Prisma client
 COPY prisma ./prisma
 RUN npx prisma generate
@@ -23,7 +25,8 @@ COPY . .
 # Ensure all dependencies are updated
 RUN npx update-browserslist-db@latest || true
 
-# Accept build arguments for sensitive variables (not directly hardcoded)
+
+# Define build-time variables
 ARG SUPABASE_URL
 ARG SUPABASE_KEY
 ARG DATABASE_URL
@@ -33,6 +36,7 @@ ARG CLERK_SECRET_KEY
 ARG NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL
 ARG NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL
 
+# Set environment variables for runtime
 # Set environment variables for runtime
 ENV SUPABASE_URL=${SUPABASE_URL}
 ENV SUPABASE_KEY=${SUPABASE_KEY}
