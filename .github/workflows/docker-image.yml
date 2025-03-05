@@ -45,4 +45,4 @@ jobs:
             -t ${{ secrets.DOCKER_HUB_USERNAME }}/spindriftimageci:latest --push .
 
       - name: "Wait for 10 minutes to check the website"
-        run: sleep 240  # Sleep for 600 seconds (4 minutes)
+        run: sleep 241  # Sleep for 600 seconds (4 minutes)
