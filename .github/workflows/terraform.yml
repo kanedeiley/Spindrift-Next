@@ -59,7 +59,7 @@ jobs:
 
       # Step 9: Wait for 10 minutes (Pause for manual inspection)
       - name: "Wait for 10 minutes to check the website"
-        run: sleep 420  # Sleep for 600 seconds (7 minutes)
+        run: sleep 600  # Sleep for 600 seconds (7 minutes)
 
       # Step 10: Destroy Terraform infrastructure after inspection
       - name: "Terraform Destroy"
