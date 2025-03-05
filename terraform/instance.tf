@@ -38,7 +38,7 @@ resource "aws_instance" "SpinDrift" {
     After=docker.service
 
     [Service]
-    ExecStart=/usr/bin/docker run -d -p 3000:3000 --name SpinDrift gdeiley0311/spindriftimageci:latest
+    ExecStart=/usr/bin/docker run -d -p 3000:3000 --name SpinDrift surfspindrift/spindriftimageci:latest
     Restart=always
 
     [Install]
